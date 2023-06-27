@@ -7,9 +7,9 @@ and obstacles, from the (0,0) position to the (9,5) position.
 
 Allowed moves include:
 
-    - shifting horizontally or vertically the rod by 1 unit.
-    - rotating the rod from vertical to horizontal position and viceversa,
-    provided there's a surrounding empty 3 x 3 space.
+- shifting horizontally or vertically the rod by 1 unit.
+- rotating the rod from vertical to horizontal position and viceversa,
+provided there's a surrounding empty 3 x 3 space.
     
 The implemented solution should take as input the labyrinth (as a list
 of lists of characters, `'.'` for air and `'#'` for denoting a solid block)
