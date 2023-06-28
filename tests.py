@@ -1,20 +1,54 @@
 from functions import *
 
-rod1 = rod([(0,0),(1,0),(2,0)])
-rod2 = rod([(0,0),(0,1),(0,2)])
-rod99 = rod([(7,0),(8,0),(9,0)])
-rod55 = rod([(0,4),(0,5),(0,6)])
+init_rod = create_rod(1,0,0)
 
+rod1 = create_rod(0,1,1)
+rod2 = create_rod(0,1,1)
+rod99 = create_rod(8,0,1)
+rod55 = create_rod(0,5,0)
 
-rodt = rod1
 
 s = '.........'
-s = 9*s
+s = 5*s
 lab_base = str2lab(s)
 lab_obs = put_obstacles(lab_base, [(0,0)])
 #print(lab_base)
 
-lab = lab_obs
+lab = lab_base
 
-assert check_rod(rodt)
-assert check_collision(rodt, lab)
+
+#if can_rotate(rodt,lab):
+#    rodt = rotate_rod(rodt)
+
+rod = init_rod
+
+rod = shift_rod(rod,'s')
+rod = shift_rod(rod,'e')
+rod = rotate_rod(rod)
+
+lx, ly = get_shape(lab)
+#assert sits_in_box(rod, lx, ly)
+
+lab = put_obstacles(lab, [(1,1)])
+lab = [list("..."),list("..."),list("...")]
+
+
+
+
+print("PRINTING LABYRINTH")
+for row in lab:
+    print(row)
+
+#show_config(init_rod,lab)
+
+
+configs, count = config_space(lab)
+
+
+input()
+print("PRINTING ALL VIABLE CONFIGURATIONS")
+for c in configs:
+    print(c)
+    show_config(c,lab)
+    input()
+
