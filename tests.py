@@ -1,5 +1,7 @@
 from functions import *
 
+# ASSET GENERATION
+
 init_rod = (1,0,0) #sits_in_box, cannot rotate, moves 'es'
 rod1 = (0,1,1) # sits_in_box, cannot rotate, moves 'es'
 rod2 = (1,1,0) # sits_in_box, can rotate, moves 'esnr'
@@ -14,10 +16,8 @@ s = '.........'
 s = 5*s
 lab_base = str2lab(s)
 
-#show_config(rod44,lab_base)
 
-
-# Labytinth with obstracted origin
+# Labytinth with obstructed origin
 lab_origin_obs = put_obstacles(lab_base, [(0,0)])
 lab_target_obs = put_obstacles(lab_base, [(8,4)])
 
@@ -53,12 +53,12 @@ assert touches_target(rod,0,0)
 assert touches_target(rod,-1,0)
 
 # testing the generation of configurations
-configs, count = config_space(lab_base)
+configs, count = config_space(lab_base, count_states = True)
 assert count == 62
 
 
 lab_simple = [list("..."),list("..."),list("...")]
-configs, count = config_space(lab_simple)
+configs, count = config_space(lab_simple, count_states = True)
 assert count == 6
 
 
@@ -79,35 +79,26 @@ assert count == 6
 # with a random fraction and checks the upper bound
 random_fill = random.random()
 gen_lab = random_lab(fill = random_fill)
-configs, count = config_space(gen_lab)
-print(f"Random labyrinth with {100*random_fill:.2f} % fill. Count: {count}")
-print_all(init_rod, gen_lab, omit_rod = True)
+configs, count = config_space(gen_lab, count_states = True)
+#print(f"Random labyrinth with {100*random_fill:.2f} % fill. Count: {count}")
+#print_all(init_rod, gen_lab, omit_rod = True)
 assert count < lx*ly*2
 
     
+# testing the return_neighbors functionality of allowed_moves
 
-exit()
-lx, ly = get_shape(lab)
-infinity = lx*ly*2
-print("TESTING STEPS OF THE DIKSTRA IMPLEMENTATION")
-dist = {}
-prev = {}
-for c in configs:
-    #print(c)
-    #show_config(c,lab)
-    #input()
-    dist[c] = infinity
-    prev[c] = None
-
-Q = configs
+assert allowed_moves(init_rod, lab_base, give_neighbors = True) == [(2,0,0),(1,1,0)]
 
 
-# first step of Dijkstra
+def generate_simple_lab(n):
+    generated_lab = [list(n*['.']) for i in range(n)]
+    return generated_lab
 
 
+# automated tests for finding the solution in simple labyrinth
 
-interm_dict = {c:dist[c] for c in Q}
-print(interm_dict)
-
-
+for k in range(3,30):
+    temp_lab = generate_simple_lab(k)
+    assert solution(generate_simple_lab(k)) == 2*(k-2)
+    del temp_lab
 
